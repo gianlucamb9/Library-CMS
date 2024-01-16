@@ -39,6 +39,41 @@
     </div>
 </body>
 <script type="module">
+    import XMLReq from "../js/XMLReq.js";
+    import book from "../js/bookClass.js";
+
+    let xmlReq = new XMLReq("http://localhost/Library-CMS/php/customer.php");
+    let bList = [];
+    let bookObj = null;
+
+    const tablePoper=()=>{
+        const tbody = document.querySelector("tbody");
+        console.log(bList);
+        for (let req of bList) {
+            tbody.append(req.toRow())
+        };
+    };
+
+    const loadData=(data)=>{
+        let books = (JSON.parse(data));
+        for(let book of books) {
+            bookObj = new book (book.id, book.book_name, book_book_author, book.category, book.quantity, book.price);
+            bList.push(bookObj);
+        };
+        tablePoper();
+    };
     
+    const load =()=>{
+        let reqData = new FormData();   
+        reqData.append("mode", "load-books");
+        xmlReq.Post(reqData).then(
+            loadData,
+            (rej)=>console.log(rej)
+        )
+    }
+    load();
 </script>
 </html>
+
+
+

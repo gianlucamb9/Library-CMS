@@ -1,6 +1,6 @@
 <?php
 $dbServer = 'localhost';
 $dbUser = 'phpagent';
-$dbPass = 'groupa';
+$dbPass = 'webdev123';
 $dbName = 'library_db';
 ?>
