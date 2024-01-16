@@ -3,8 +3,6 @@ header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: *");
 include("./config.php");
 
-$dbCon = new mysqli($dbServer, $dbUser, $dbPass,$dbName);
-
 if($_SERVER["REQUEST_METHOD"]=="POST") {
     switch($_POST["mode"]){
 
@@ -15,15 +13,16 @@ if($_SERVER["REQUEST_METHOD"]=="POST") {
             } else {
                 $selectCmd = "SELECT * FROM book_tb";
                 $result = $dbCon->query($selectCmd);
+                $bList = [];
                 if($result->num_rows > 0){
-                    $plist = [];
-                    while($product = $result->fetch_assoc()){
-                        array_push($plist, $product);
+                    while($row = $result->fetch_assoc()){
+                        array_push($bList, $row);
                     }
-                    echo json_encode($plist);
+                    echo json_encode($bList);
                 } else {
                     echo "No data found!";
                 }
+                $dbCon->close();
             }
             break;
 

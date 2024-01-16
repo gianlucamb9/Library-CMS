@@ -39,8 +39,8 @@
     </div>
 </body>
 <script type="module">
-    import XMLReq from "../js/XMLReq.js";
-    import book from "../js/bookClass.js";
+    import XMLReq from "../javascript/XMLReq.js";
+    import book from "../javascript/bookClass.js";
 
     let xmlReq = new XMLReq("http://localhost/Library-CMS/php/customer.php");
     let bList = [];
@@ -48,22 +48,24 @@
 
     const tablePoper=()=>{
         const tbody = document.querySelector("tbody");
-        console.log(bList);
+        // console.log(bList);
         for (let req of bList) {
-            tbody.append(req.toRow())
+            tbody.append(req.toRow());
         };
     };
 
     const loadData=(data)=>{
-        let books = (JSON.parse(data));
-        for(let book of books) {
-            bookObj = new book (book.id, book.book_name, book_book_author, book.category, book.quantity, book.price);
+        let bookData = JSON.parse(data);
+        // console.log(bookData);
+        for(let item of bookData) {
+            bookObj = new book(item.id, item.book_name, item.book_author, item.category, item.quantity, item.price);
             bList.push(bookObj);
         };
         tablePoper();
     };
     
     const load =()=>{
+        let fname = sessionStorage.getItem("fname");
         let reqData = new FormData();   
         reqData.append("mode", "load-books");
         xmlReq.Post(reqData).then(
