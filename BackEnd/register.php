@@ -7,6 +7,7 @@ include("./connect.php");    //solved
 // user table
 $regTb = "user_tb";
 
+// KUNIHIRO CODE
 
 $conn = new mysqli($db_host, $db_user, $db_pass, $db_name);
 
