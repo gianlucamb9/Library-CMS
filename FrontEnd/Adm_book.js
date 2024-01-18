@@ -13,7 +13,7 @@ $(document).ready(function () {
        
 
         $.ajax({
-            url: 'http://localhost/php/Library/BackEnd/Adm_book.php',
+            url: 'http://localhost/php/LibrarySystem/BackEnd/Adm_book.php',
             method: 'POST',
             data: JSON.stringify({ book_Name, quantity, price, category, book_Descr, file }),
             contentType: 'application/json',
@@ -34,7 +34,7 @@ $(document).ready(function () {
 const deleteHandler = (id) =>{
     debugger;
     $.ajax({
-        url: 'http://localhost/php/Library/BackEnd/Adm_book.php',
+        url: 'http://localhost/php/LibrarySystem/BackEnd/Adm_book.php',
         method: 'DELETE',
         data: JSON.stringify({ id }),
         contentType: 'application/json',
@@ -87,7 +87,7 @@ const EditHandler = (id, book_Name, quantity, price, categ, book_Descr) =>{
         categ = document.querySelector('#categ').value;
         debugger;
         $.ajax({
-            url: 'http://localhost/php/Library/BackEnd/Adm_book.php',
+            url: 'http://localhost/php/LibrarySystem/BackEnd/Adm_book.php',
             method: 'PUT',
             data: JSON.stringify({ id, book_Name, quantity, price, categ, book_Descr }),
             contentType: 'application/json',
@@ -151,7 +151,7 @@ function loadMenu() {
     debugger;
     $.ajax({
         method: 'GET',
-        url: 'http://localhost/php/Library/BackEnd/Adm_book.php',
+        url: 'http://localhost/php/LibrarySystem/BackEnd/Adm_book.php',
         success: function (response) {
             debugger;
             console.log(response);

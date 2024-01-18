@@ -25,7 +25,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
 function getFilter($conn) {
     $startDate = date('2023-12-01');
     $endDate = date('2023-12-30');
-    $result = $conn->query("SELECT order_date FROM order_tb WHERE order_date between '$startDate' and '$endDate'");
+    $result = $conn->query("SELECT order_date FROM orderbooks_tb WHERE order_date between '$startDate' and '$endDate'");
     $data = [];
 
     while ($row = $result->fetch_assoc()) {
@@ -44,7 +44,7 @@ function getFilter($conn) {
 // ON users.id = orders.id;
 
 function getOrder($conn) {
-    $result = $conn->query('SELECT * FROM order_tb');
+    $result = $conn->query('SELECT * FROM orderbooks_tb');
     $data = [];
 
     while ($row = $result->fetch_assoc()) {
