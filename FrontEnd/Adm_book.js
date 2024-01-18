@@ -49,6 +49,12 @@ const deleteHandler = (id) =>{
     });
 }
 
+let logoutBtn = document.querySelector("#admLogout");
+    logoutBtn.addEventListener("click", ()=>{
+        sessionStorage.removeItem("cid");
+        location.replace("./login.html");
+    });
+
 
 
 const EditHandler = (id, book_Name, quantity, price, categ, book_Descr) =>{

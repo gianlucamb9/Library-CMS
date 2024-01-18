@@ -105,17 +105,17 @@ function redirectBasedOnUserType($user)
   if (session_status() === PHP_SESSION_ACTIVE) {
     switch ($user["user_type"]) {
       case "C":
-        echo "Customer";
+        echo "Customer ".json_encode($user);
         break;
       case "S":
         if($user["new_staff"] == true){
-          echo "Staff";
+          echo "Staff".json_encode($user);
         }else{
-          echo "Invalid user type.";
+          echo "It's new Staff need be approval by Admin.";
         }
         break;
       case "A":
-        echo "Admin";
+        echo "Admin".json_encode($user);
         break;
       default:
         echo "Invalid user type.";

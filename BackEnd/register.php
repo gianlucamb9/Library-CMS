@@ -46,32 +46,4 @@ function AddReg($conn) {
                     $stmt->close();
                 }
 }
-// if($_SERVER["REQUEST_METHOD"]=="POST"){
-//     if(isset($_SERVER["PATH_INFO"])){
-//         switch($_SERVER["PATH_INFO"]){
-//             case "/reg":
-//                 $dbCon = mysqli_connect($dbServer,$dbUser,$dbPass,$dbName);
-//                 if(!$dbCon){
-//                     die("Connection to DB failed! ".mysqli_connect_error());
-//                 }
-//                 $selectCmd = "SELECT email FROM ".$regTb." WHERE email='".$_POST["email"]."'";
-//                 $result = $dbCon->query($selectCmd);
-//                 if($result->num_rows > 0){
-//                     echo "Registration failed!";
-//                     $dbCon->close();
-//                 }else{
-//                     $new_staff = false;      // solved
-//                     $insCmd = $dbCon->prepare("INSERT INTO ".$regTb." (fname,lname,mobile,email,password,user_type,new_staff) VALUES (?,?,?,?,?,?,?)");
-//                     $insCmd->bind_param("ssssssi",$_POST["fname"],$_POST["lname"],$_POST["mobile"],$_POST["email"],password_hash($_POST["password"],PASSWORD_BCRYPT,["cost"=>10]),$_POST["user_type"],$new_staff);
-//                     $insCmd->execute();
-//                     echo "Record added.";
-//                     $insCmd->close();
-//                     $dbCon->close();
-//                 }
-//             break;
-//         }
-//     }else{
-//         echo("Bad request!!!!");
-//     }
-// }
 ?>
