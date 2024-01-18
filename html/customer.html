@@ -62,6 +62,12 @@
     //       )
     // });
 
+    let logoutBtn = document.querySelectorAll("button")[1];
+    logoutBtn.addEventListener("click", ()=>{
+        sessionStorage.removeItem("cid");
+        location.replace("./login.html");
+    });
+
     let mbBtn = document.querySelectorAll("button")[0];
     mbBtn.addEventListener("click", ()=>{
         location.replace("./customer_books.html");

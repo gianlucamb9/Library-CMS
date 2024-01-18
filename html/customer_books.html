@@ -47,6 +47,12 @@
     let bList = [];
     let bookObj = null;
 
+    let logoutBtn = document.querySelectorAll("button")[1];
+    logoutBtn.addEventListener("click", ()=>{
+        sessionStorage.removeItem("cid");
+        location.replace("./login.html");
+    });
+
     let abBtn = document.querySelectorAll("button")[0];
     abBtn.addEventListener("click", ()=>{
         location.replace("./customer.html");
