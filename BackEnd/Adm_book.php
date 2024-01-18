@@ -40,10 +40,10 @@ function getMenu($conn) {
 }
 function addMenu($conn) {
     $data = json_decode(file_get_contents('php://input'), true);
-
-    $sql = 'INSERT INTO book_tb (book_Name, quantity, price, category, book_Descr) VALUES (?, ?, ?, ?, ?)';
+    $status = "Avaliable";
+    $sql = 'INSERT INTO book_tb (book_name, quantity, price, category, book_author, status) VALUES (?, ?, ?, ?, ?, ?)';
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param('sidss', $data['book_Name'], $data['quantity'], $data['price'],$data['category'], $data['book_Descr']);
+    $stmt->bind_param('sidsss', $data['book_name'], $data['quantity'], $data['price'],$data['category'], $data['book_author'], $status);
 
     if ($stmt->execute()) {
         echo json_encode(['message' => 'Menu added successfully.']);
@@ -56,9 +56,9 @@ function addMenu($conn) {
 
 function updateMenu($conn) {
     $data = json_decode(file_get_contents('php://input'), true);
-    $sql = 'UPDATE book_tb SET book_Name = ?, quantity = ?, price = ?, category = ?, book_Descr = ? WHERE id = ?';
+    $sql = 'UPDATE book_tb SET book_name = ?, quantity = ?, price = ?, category = ?, book_author = ? WHERE id = ?';
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param('sidssi', $data['book_Name'], $data['quantity'], $data['price'],$data['category'], $data['book_Descr'], $data['id']);
+    $stmt->bind_param('sidssi', $data['book_name'], $data['quantity'], $data['price'],$data['category'], $data['book_author'], $data['id']);
 
     if ($stmt->execute()) {
         echo json_encode(['message' => 'Menu deleted successfully.']);

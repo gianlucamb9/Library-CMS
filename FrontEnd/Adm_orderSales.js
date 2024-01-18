@@ -29,7 +29,7 @@ const tablePoper = (data) => {
     debugger;
     $.ajax({
         method: 'POST',
-        url: 'http://localhost/php/fast-food-website/BackEnd/Adm_filter.php',
+        url: 'http://localhost/php/LibrarySystem/BackEnd/Adm_filter.php',
         data: JSON.stringify({ startDate, endDate }),
         contentType: 'application/json',
         success: function (response) {
@@ -51,7 +51,7 @@ function loadOrder() {
     debugger;
     $.ajax({
         method: 'GET',
-        url: 'http://localhost/php/fast-food-website/BackEnd/Adm_orderSales.php',
+        url: 'http://localhost/php/LibrarySystem/BackEnd/Adm_orderSales.php',
         success: function (response) {
             debugger;
             console.log(response);

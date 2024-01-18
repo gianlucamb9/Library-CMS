@@ -16,12 +16,15 @@ switch ($_SERVER['REQUEST_METHOD']) {
     case 'GET':
         getMenu($conn);
         break;
+    case 'POST':
+        updateApproval($conn);
+        break;
     default:
         die(json_encode(['error' => 'Invalid request method.']));
 }
 
 function getMenu($conn) {
-    $result = $conn->query('SELECT id, fname, lname, mobile, email, user_type FROM user_tb');
+    $result = $conn->query('SELECT id, fname, lname, mobile, email, user_type, new_staff FROM user_tb');
     $data = [];
 
     while ($row = $result->fetch_assoc()) {
@@ -31,5 +34,20 @@ function getMenu($conn) {
     echo json_encode($data);
 }
 $conn->close();
+
+function updateApproval($conn) {
+    $data = json_decode(file_get_contents('php://input'), true);
+    $sql = 'UPDATE user_tb SET new_staff = ? WHERE id = ?';
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param('ii', $data['new_staff'], $data['id']);
+
+    if ($stmt->execute()) {
+        echo json_encode(['message' => 'Approval successfully.']);
+    } else {
+        echo json_encode(['error' => 'Approval failed.']);
+    }
+ 
+    $stmt->close();
+}
 
 ?>

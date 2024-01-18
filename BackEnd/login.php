@@ -1,10 +1,14 @@
 <?php
-header("Access-Control-Allow-Origin: *");
+header('Content-Type: application/json');
+header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE');
+header('Access-Control-Allow-Headers: Content-Type');
 require("./config.php");
 
 //Connect to DB
-function dbConnect($dbServer, $dbUser, $dbPass, $dbName)
+function dbConnect()
 {
+  global $dbServer, $dbUser, $dbPass, $dbName;
   $dbCon = new mysqli($dbServer, $dbUser, $dbPass, $dbName);
   if ($dbCon->connect_error) {
     die("Connection to database failed. " . $dbCon->connect_error);
@@ -54,8 +58,14 @@ function blockUser($userId, $dbCon)
   $insBlock->execute();
 }
 
-function loginUser($email, $password,$dbCon)
+function loginUser($email, $password)
 {
+  global $dbCon;
+
+  if (!$email) {
+    echo "User not found.";
+    return null;
+  } else {
     $user = getEmail($dbCon, $email);
     if ($user) {
       if (!checkBlacklist($user["id"], $dbCon)) {
@@ -63,12 +73,12 @@ function loginUser($email, $password,$dbCon)
           if ($user["ecount"] > 0) {
             resetEcount($dbCon, $user["id"]);
 
-            session_start();
+            // session_start();
             $_SESSION["loginUser"] = $user;
             $_SESSION["timeout"] = time() + 300;
 
-            echo "Login success for user type: ";
-            userType($user);
+            // echo "Login success for user type: ";
+            redirectBasedOnUserType($user);
           }
         } else {
           updateEcount($dbCon, $user["id"]);
@@ -88,24 +98,24 @@ function loginUser($email, $password,$dbCon)
       return null;
     }
   }
+}
 
-
-function userType($user)
+function redirectBasedOnUserType($user)
 {
   if (session_status() === PHP_SESSION_ACTIVE) {
     switch ($user["user_type"]) {
       case "C":
-        echo "customer";
+        echo "Customer ".json_encode($user);
         break;
       case "S":
         if($user["new_staff"] == true){
-          echo "staff";
+          echo "Staff".json_encode($user);
         }else{
-          echo "Invalid user type.";
+          echo "It's new Staff need be approval by Admin.";
         }
         break;
       case "A":
-        echo "admin";
+        echo "Admin".json_encode($user);
         break;
       default:
         echo "Invalid user type.";
@@ -130,17 +140,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     switch ($_POST["mode"]) {
       case "login":
-        $dbCon = dbConnect($dbServer, $dbUser, $dbPass, $dbName);
-        $user = loginUser($_POST["email"], $_POST["password"],$dbCon);
+        $dbCon = dbConnect();
+        $user = loginUser($_POST["email"], $_POST["password"]);
 
         $dbCon->close();
         break;
 
-        
+      // Add other cases as needed
+
+      default:
+        // Handle other modes
+        break;
+    
+
         case "blk":  // Only admin user can see blacklist details
           session_start();
           if (isset($_SESSION["loginUser"]) && $_SESSION["loginUser"]["user_type"] == "A") {
-              $dbCon = dbConnect($dbServer, $dbUser, $dbPass, $dbName);
+              $dbCon = dbConnect();
               
               $selectCmd = "SELECT user_tb.id, fname, lname, mobile, email, user_type, time FROM user_tb INNER JOIN blacklist_tb ON user_tb.id=blacklist_tb.id";
               $result = $dbCon->query($selectCmd);
