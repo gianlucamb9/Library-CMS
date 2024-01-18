@@ -44,7 +44,7 @@ function getFilter($conn) {
 // ON users.id = orders.id;
 
 function getOrder($conn) {
-    $result = $conn->query('SELECT * FROM orderbooks_tb');
+    $result = $conn->query('SELECT * FROM orderbook_tb');
     $data = [];
 
     while ($row = $result->fetch_assoc()) {

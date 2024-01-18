@@ -20,14 +20,14 @@
                 <div>
                     <a href="Adm_book.html">Book</a>
                     <a href="Adm_userReport.html">Users Report</a>
-                    <a href="Adm_orderSales.html">Order & Sales</a>
+                    <a href="Adm_orderSales.html">Order & Rents</a>
                 </div>
             </form>
         </nav>
     </header>
 
+    <button type="button" class="btn btn-danger" id="admLogout">Logout</button>
     <div class="container">
-        <button type="button" class="btn btn-danger" style="align-items: right" id="admLogout">Logout</button>
         <h1 class="text-center">Books</h1>
         
         <button type="button" class="btn btn-success" data-toggle="modal" data-target="#addMenuModal">
@@ -60,7 +60,7 @@
                 <tr>
                     <th scope="col">ID</th>
                     <th scope="col">Book</th>
-                    <th scope="col">Description</th>
+                    <th scope="col">Author</th>
                     <th scope="col">Amount</th>
                     <th scope="col">Price</th>
                     <th scope="col">Category</th>
@@ -112,7 +112,7 @@
 
                         </div>
                         <div class="form-group">
-                            <label for="descr">Description</label>
+                            <label for="descr">Author</label>
                             <input type="text" class="form-control" id="description" name="description" required>
                         </div>
                     </form>

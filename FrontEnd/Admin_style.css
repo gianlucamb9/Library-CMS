@@ -23,3 +23,11 @@ body {
   .dropdown:hover .dropbtn {
     background-color: green;
   }
+
+  #admLogout{
+    align-items: right;
+    margin-right: 2px;
+    padding-right: 10px;
+    text-align: center;
+    float: right;
+  }

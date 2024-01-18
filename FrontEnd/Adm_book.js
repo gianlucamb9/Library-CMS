@@ -4,18 +4,18 @@ $(document).ready(function () {
 
     $('#addMenuBtn').on('click', function () {
         debugger;
-        const book_Name = $('#book').val();
+        const book_name = $('#book').val();
         const quantity = $('#amount').val();
         const price = $('#price').val();
         const category = $('#categ').val();
-        const book_Descr = $('#description').val();
+        const book_author = $('#description').val();
         const file = $('#file').val();
        
 
         $.ajax({
             url: 'http://localhost/php/LibrarySystem/BackEnd/Adm_book.php',
             method: 'POST',
-            data: JSON.stringify({ book_Name, quantity, price, category, book_Descr, file }),
+            data: JSON.stringify({ book_name, quantity, price, category, book_author, file }),
             contentType: 'application/json',
             success: function (response) {
                 console.log(response);
@@ -57,13 +57,13 @@ let logoutBtn = document.querySelector("#admLogout");
 
 
 
-const EditHandler = (id, book_Name, quantity, price, categ, book_Descr) =>{
+const EditHandler = (id, book_name, book_author, quantity, price, category) =>{
     debugger;
     let labelName = document.querySelector('#labelName');
     labelName.hidden = false;
     let name = document.querySelector('#name');
     name.hidden = false;
-    name.value = book_Name;
+    name.value = book_name;
 
     let labelAmount = document.querySelector('#labelAmount');
     labelAmount.hidden = false;
@@ -81,21 +81,22 @@ const EditHandler = (id, book_Name, quantity, price, categ, book_Descr) =>{
     labelCateg.hidden = false;
     let categs = document.querySelector('#categUpd');
     categs.hidden = false;
-    categs.value = categ;
+    categs.value = category;
 
     let saved = document.querySelector('#updateBtn');
     saved.hidden = false;
     saved.className = "btn btn-primary";
     saved.addEventListener('click', (e) => {
-        book_Name = document.querySelector('#name').value;
-        quantity = document.querySelector('#amount').value;
-        price = document.querySelector('#price').value;
-        categ = document.querySelector('#categ').value;
+        debugger;
+        book_name = document.querySelector('#name').value;
+        quantity = amount.value;
+        price = prices.value;
+        category = categs.value;
         debugger;
         $.ajax({
             url: 'http://localhost/php/LibrarySystem/BackEnd/Adm_book.php',
             method: 'PUT',
-            data: JSON.stringify({ id, book_Name, quantity, price, categ, book_Descr }),
+            data: JSON.stringify({ id, book_name, book_author, quantity, price, category }),
             contentType: 'application/json',
             success: function (response) {
                 console.log(response);
