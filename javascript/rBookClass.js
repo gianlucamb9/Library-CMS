@@ -1,34 +1,31 @@
-import XMLReq from "../javascript/XMLReq.js";
+import XMLReq from "./XMLReq.js";
 let xmlReq = new XMLReq("http://localhost/Library-CMS/php/customer.php");
 let cid = sessionStorage.getItem("cid");
 
-class book {
-    constructor(id, book_name, book_author, category, quantity, price) {
+class rBook {
+    constructor(id, book_name, book_author, category) {
       this.id = id;
       this.book_name = book_name;
       this.book_author = book_author;
-      this.category = category;
-      this.quantity = quantity;
-      this.price = price;
 
-      const selBtn = document.createElement("button");
-      selBtn.innerText = "Select";
-      selBtn.type = "button";
-      selBtn.classList.add("btn-accept");
-      this.selBtn = selBtn;
+      const retBtn = document.createElement("button");
+      retBtn.innerText = "Return";
+      retBtn.type = "button";
+      retBtn.classList.add("btn-accept");
+      this.retBtn = retBtn;
 
-      const selPress=(e)=>{
+      const retPress=(e)=>{
           let reqData = new FormData();   
-          reqData.append("mode", "select-book");
-          reqData.append("bid",this.id);
+          reqData.append("mode", "return-book");
           reqData.append("cid", cid);
+          reqData.append("bid", this.id)
           xmlReq.Post(reqData).then(
-            alert("Book selected."),
+            alert("Book returned!"),
             (rej)=>console.log(rej)
           )
           e.target.parentElement.parentElement.style.display="none";
         }
-      selBtn.addEventListener("click", selPress);
+      retBtn.addEventListener("click", retPress);
     }
 
     toRow() {
@@ -41,4 +38,4 @@ class book {
         return tr;
       }
 };
-export default book;
+export default rBook;

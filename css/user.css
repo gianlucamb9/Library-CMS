@@ -4,6 +4,11 @@
     display: flex;
     align-items: center;
   }
+
+  .btn-accept {
+    background-color: white;
+    border-radius: 5px;
+  }
   
   #welcome-h1 {
     color: black;
