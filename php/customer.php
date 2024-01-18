@@ -76,23 +76,23 @@ if($_SERVER["REQUEST_METHOD"]=="POST") {
                             echo "No book found";
                         }
                     }
-                    // $joinCmd = "SELECT user_tb.id,fname FROM user_tb INNER JOIN orderbook_tb ON user_tb.id=orderbook_tb.cid";
-                    // $jresult = $dbCon->query($joinCmd);
-                    // if($jresult->num_rows > 0){
-                    //     $User = [];
-                    //     $uname = null;
-                    //     while($user = $jresult->fetch_assoc()){
-                    //         array_push($User,$user);
-                    //     }
-                    //     foreach($User as $user){
-                    //         $uname = $user["fname"];
-                    //     }
-                    //     $uquery = "UPDATE `orderbook_tb` SET `cname`='$uname' WHERE `cid`='$cid'";
-                    //     $jstmt = $dbCon->prepare($uquery);
-                    //     $jstmt->execute();
-                    // }else{
-                    //     echo "No Record";
-                    // }
+                //     $joinCmd = "SELECT user_tb.id,fname FROM user_tb INNER JOIN orderbook_tb ON user_tb.id=orderbook_tb.cid";
+                //     $jresult = $dbCon->query($joinCmd);
+                //     if($jresult->num_rows > 0){
+                //         $User = [];
+                //         $uname = null;
+                //         while($user = $jresult->fetch_assoc()){
+                //             array_push($User,$user);
+                //         }
+                //         foreach($User as $user){
+                //             $uname = $user["fname"];
+                //         }
+                //         $uquery = "UPDATE `orderbook_tb` SET `cname`='$uname' WHERE `cid`='$cid'";
+                //         $jstmt = $dbCon->prepare($uquery);
+                //         $jstmt->execute();
+                //     }else{
+                //         echo "No Record";
+                //     }
                 } else {
                     echo "No data found!";
                 }
@@ -130,9 +130,9 @@ if($_SERVER["REQUEST_METHOD"]=="POST") {
 
             case "return-book":
                 $dbCon = new mysqli ($dbServer,$dbUser,$dbPass,$dbName);
-            if($dbCon->connect_error){
-                echo "Connection to DB failed! ".$dbCon->connect_error;
-            } else {
+                if($dbCon->connect_error){
+                    echo "Connection to DB failed! ".$dbCon->connect_error;
+                } else {
                 $bid = $_POST["bid"];
 
                 $selectQuery = "DELETE FROM orderbook_tb WHERE `orderbook_tb`.`bid`= $bid";
@@ -144,6 +144,42 @@ if($_SERVER["REQUEST_METHOD"]=="POST") {
                 echo "Books returned!";
                 $dbCon->close();
             }
+                break;
+
+            case "search-books":
+                $dbCon = new mysqli ($dbServer,$dbUser,$dbPass,$dbName);
+                if($dbCon->connect_error){
+                    echo "Connection to DB failed! ".$dbCon->connect_error;
+                } else {
+                    $cat = $_POST["cat"];
+                    // print_r($cat);
+                    if($cat!="All"){
+                        $selectCmd = "SELECT * FROM book_tb WHERE `book_tb`.`category`='$cat' AND `book_tb`.`status`='Available'";
+                        $result = $dbCon->query($selectCmd);
+                        $bList = [];
+                        if($result->num_rows > 0){
+                            while($row = $result->fetch_assoc()){
+                                array_push($bList, $row);
+                            }
+                            echo json_encode($bList);
+                        } else {
+                            echo "No data found!";
+                        }
+                    } else {
+                        $selectCmd = "SELECT * FROM book_tb WHERE `book_tb`.`status`='Available'";
+                        $result = $dbCon->query($selectCmd);
+                        $bList = [];
+                        if($result->num_rows > 0){
+                            while($row = $result->fetch_assoc()){
+                                array_push($bList, $row);
+                            }
+                            echo json_encode($bList);
+                        } else {
+                            echo "No data found!";
+                        }
+                    }
+                }
+                $dbCon->close();
                 break;
     }
 }

@@ -9,6 +9,14 @@
     background-color: white;
     border-radius: 5px;
   }
+
+  .check-container {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+  }
   
   #welcome-h1 {
     color: black;
@@ -38,27 +46,10 @@
     margin: auto;
   }
   
-  .card-title {
-    font-weight: 700;
-  }
-  
-  .card-text {
-    font-size: 0.8rem;
-  }
-  
-  .sets-unit,
-  .reps-unit {
-    font-size: 0.8rem;
-  }
   
   .type-img {
     width: 32px;
     height: 32px;
-  }
-  
-  .reps,
-  .sets {
-    font-weight: 500;
   }
   
   .form-label,
