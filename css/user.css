@@ -24,6 +24,10 @@
     display: flex;
     align-items: center;
   }
+
+  .content-container {
+    margin-top: 50px;
+  }
   
   table {
     margin: auto;
